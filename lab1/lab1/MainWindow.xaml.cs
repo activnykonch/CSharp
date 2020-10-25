@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using System.IO;
+using System.IO.Compression;
 using System.Collections;
 
 namespace lab1
@@ -104,16 +105,16 @@ namespace lab1
         {
             List<string> lst = new List<string>(right.Split('\\'));
             right = right.TrimEnd((lst[lst.Capacity - 1]).ToCharArray());
-            bool Contains = false;
+            bool contains = false;
             foreach (DriveInfo drive in Drives_right.ItemsSource)
             {
                 if (drive.Name.Contains(right))
                 {
-                    Contains = true;
+                    contains = true;
                     break;
                 }
             }
-            if (!Contains) right = right.TrimEnd('\\');
+            if (!contains) right = right.TrimEnd('\\');
             Update();
         }
 
@@ -174,11 +175,30 @@ namespace lab1
                 if (List_left.SelectedItem is FileInfo)
                 {
                     FileInfo info = (FileInfo)List_left.SelectedItem;
-                    string path = right + '\\' + info.Name.ToString();
-                    if (!File.Exists(right))
+                    bool contains = false;
+                    foreach (DriveInfo drive in Drives_right.ItemsSource)
                     {
-                        var fl = File.Create(path);
-                        fl.Close();
+                        if (drive.Name.Contains(right))
+                        {
+                            contains = true;
+                            break;
+                        }
+                    }
+                    string path;
+                    if (contains) path = right + info.Name.ToString();
+                    else path = right + '\\' + info.Name.ToString();
+                    if (!File.Exists(path))
+                    {
+                        try
+                        {
+                            var fl = File.Create(path);
+                            fl.Close();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK);
+                            return;
+                        }
                     }
                     info.CopyTo(path, true);
                 }
@@ -193,11 +213,30 @@ namespace lab1
                 if (List_right.SelectedItem is FileInfo)
                 {
                     FileInfo info = (FileInfo)List_right.SelectedItem;
-                    string path = left + '\\' + info.Name.ToString();
-                    if (!File.Exists(left))
+                    bool contains = false;
+                    foreach (DriveInfo drive in Drives_left.ItemsSource)
                     {
-                        var fl = File.Create(path);
-                        fl.Close();
+                        if (drive.Name.Contains(left))
+                        {
+                            contains = true;
+                            break;
+                        }
+                    }
+                    string path;
+                    if (contains) path = left + info.Name.ToString();
+                    else path = left + '\\' + info.Name.ToString();
+                    if (!File.Exists(path))
+                    {
+                        try
+                        {
+                            var fl = File.Create(path);
+                            fl.Close();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK);
+                            return;
+                        }
                     }
                     info.CopyTo(path, true);
                 }
@@ -544,7 +583,14 @@ namespace lab1
                         string path = left + '\\' + input.NewName.Text;
                         if (!File.Exists(path))
                         {
-                            File.Create(path);
+                            try
+                            {
+                                File.Create(path);
+                            }
+                            catch (System.Exception ex)
+                            {
+                                MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK);
+                            }
                         }
                         else
                         {
@@ -565,7 +611,14 @@ namespace lab1
                         string path = right + '\\' + input.NewName.Text;
                         if (!File.Exists(path))
                         {
+                            try
+                            {
                             File.Create(path);
+                            }
+                            catch(System.Exception ex)
+                            {
+                                MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK);
+                            }
                         }
                         else
                         {
@@ -576,7 +629,192 @@ namespace lab1
             }
             Update();
         }
-    }
 
+        private void Compress_Click(object sender, RoutedEventArgs e)
+        {
+            if (List_left.SelectedItem != null)
+            {
+                if (List_left.SelectedItem is DirectoryInfo)
+                {
+                    string zipFile = ((DirectoryInfo)List_left.SelectedItem).FullName + ".zip";
+                    try
+                    {
+                    ZipFile.CreateFromDirectory(((DirectoryInfo)List_left.SelectedItem).FullName, zipFile);
+                    }
+                    catch(System.Exception ex)
+                    {
+                        MessageBox.Show($"{ex.Message}", "Error");
+                    }
+                }
+                if (List_left.SelectedItem is FileInfo)
+                {
+                    InputBox input = new InputBox();
+                    input.Owner = this;
+                    input.NewName.Text = ((FileInfo)List_left.SelectedItem).Name.TrimEnd(((FileInfo)List_left.SelectedItem).Extension.ToCharArray());
+                    input.ShowDialog();
+                    if (input.DialogResult == true)
+                    {
+                        string path = left + '\\' + input.NewName.Text + ((FileInfo)List_left.SelectedItem).Extension;
+                        if (!File.Exists(path))
+                        {
+                            ((FileInfo)List_left.SelectedItem).MoveTo(path);
+                        }
+                    }
+                }
+            }
+            if (List_right.SelectedItem != null)
+            {
+                if (List_right.SelectedItem is DirectoryInfo)
+                {
+                    string zipFile = ((DirectoryInfo)List_right.SelectedItem).FullName + ".zip";
+                    try
+                    {
+                        ZipFile.CreateFromDirectory(((DirectoryInfo)List_right.SelectedItem).FullName, zipFile);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        MessageBox.Show($"{ex.Message}", "Error");
+                    }
+                }
+                if (List_right.SelectedItem is FileInfo)
+                {
+                    InputBox input = new InputBox();
+                    input.Owner = this;
+                    input.NewName.Text = ((FileInfo)List_right.SelectedItem).Name.TrimEnd(((FileInfo)List_right.SelectedItem).Extension.ToCharArray());
+                    input.ShowDialog();
+                    if (input.DialogResult == true)
+                    {
+                        string path = right + '\\' + input.NewName.Text + ((FileInfo)List_right.SelectedItem).Extension;
+                        if (!File.Exists(path))
+                        {
+                            ((FileInfo)List_right.SelectedItem).MoveTo(path);
+                        }
+                    }
+                }
+            }
+            Update();
+        }
+
+        private void Decompress_Click(object sender, RoutedEventArgs e)
+        {
+            if (List_left.SelectedItem != null)
+            {
+                if (List_left.SelectedItem is DirectoryInfo)
+                {
+                    MessageBox.Show("Can't decompress the folder", "Error", MessageBoxButton.OK);
+                }
+                if (List_left.SelectedItem is FileInfo)
+                {
+                    if (((FileInfo)List_left.SelectedItem).Extension.Equals(".zip") || ((FileInfo)List_left.SelectedItem).Extension.Equals(".rar"))
+                    {
+                        string path = ((FileInfo)List_left.SelectedItem).FullName.TrimEnd(".zip".ToCharArray());
+                        try
+                        {
+                            ZipFile.ExtractToDirectory(((FileInfo)List_left.SelectedItem).FullName, path);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            MessageBox.Show($"{ex.Message}", "Error");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("File must have .zip or .rar extension", "Error", MessageBoxButton.OK);
+                    }
+                }
+            }
+            if (List_right.SelectedItem != null)
+            {
+                if (List_right.SelectedItem is DirectoryInfo)
+                {
+                    MessageBox.Show("Can't decompress the folder", "Error", MessageBoxButton.OK);
+                }
+                if (List_right.SelectedItem is FileInfo)
+                {
+                    if (((FileInfo)List_right.SelectedItem).Extension.Equals(".zip") || ((FileInfo)List_right.SelectedItem).Extension.Equals(".zip"))
+                    {
+                        string path = ((FileInfo)List_right.SelectedItem).FullName.TrimEnd(".zip".ToCharArray());
+                        try
+                        {
+                            ZipFile.ExtractToDirectory(((FileInfo)List_right.SelectedItem).FullName, path);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            MessageBox.Show($"{ex.Message}", "Error");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("File must have .zip or .rar extension", "Error", MessageBoxButton.OK);
+                    }
+                }
+            }
+            Update();
+        }
+
+        private void List_left_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    Delete_Click(sender, e);
+                    break;
+                case Key.F5:
+                    Copy_Click(sender, e);
+                    break;
+                case Key.F6:
+                    Replace_Click(sender, e);
+                    break;
+                case Key.F7:
+                    Rename_Click(sender, e);
+                    break;
+                case Key.F8:
+                    Compress_Click(sender, e);
+                    break;
+                case Key.F9:
+                    Decompress_Click(sender, e);
+                    break;
+                case Key.Escape:
+                    Left_button_Click(sender, e);
+                    break;
+                default:
+                    break;
+            }
+            Keyboard.ClearFocus();
+            Update();
+        }
+
+        private void List_right_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Delete:
+                    Delete_Click(sender, e);
+                    break;
+                case Key.F5:
+                    Copy_Click(sender, e);
+                    break;
+                case Key.F6:
+                    Replace_Click(sender, e);
+                    break;
+                case Key.F7:
+                    Rename_Click(sender, e);
+                    break;
+                case Key.F8:
+                    Compress_Click(sender, e);
+                    break;
+                case Key.F9:
+                    Decompress_Click(sender, e);
+                    break;
+                case Key.Escape:
+                    Right_button_Click(sender, e);
+                    break;
+                default:
+                    break;
+            }
+            Keyboard.ClearFocus();
+            Update();
+        }
+    }
 
 }

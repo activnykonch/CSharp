@@ -9,17 +9,20 @@
         Title="FileExporer" Height="460" Width="800">
     <Grid>
         <ComboBox x:Name="Drives_left" Margin="45,50,678.6,340"></ComboBox>
-        <ListBox x:Name="List_left" MouseDoubleClick="List_left_MouseDoubleClick" Margin="45,90,413.6,100" MouseLeftButtonUp="List_left_MouseLeftButtonDown"></ListBox>
-        <ListBox x:Name="List_right" MouseDoubleClick="List_right_MouseDoubleClick"  Margin="449,90,9.6,100" MouseLeftButtonUp="List_right_MouseLeftButtonDown"/>
+        <ListBox x:Name="List_left" MouseDoubleClick="List_left_MouseDoubleClick" Margin="45,90,413.6,100" MouseLeftButtonUp="List_left_MouseLeftButtonDown" KeyUp="List_left_KeyUp"></ListBox>
+        <ListBox x:Name="List_right" MouseDoubleClick="List_right_MouseDoubleClick"  Margin="449,90,9.6,100" MouseLeftButtonUp="List_right_MouseLeftButtonDown" KeyUp="List_right_KeyUp"/>
         <ComboBox x:Name="Drives_right" Margin="449,50,274.6,340"/>
-        <Button x:Name="Left_button" Content="Back" Margin="45,25,703.6,375.4" Click="Left_button_Click"/>
-        <Button x:Name="Left_right" Content="Back" Margin="448,25,299.6,375.4" Click="Right_button_Click"/>
+        <Button x:Name="Left_button" Margin="45,25,678.6,375.4" Click="Left_button_Click">Back(Esc)
+        </Button>
+        <Button x:Name="Left_right" Content="Back(Esc)" Margin="448,25,274.6,375.4" Click="Right_button_Click"/>
         <Button x:Name="Delete" Content="Delete" Margin="35,385,678.6,10.4" Click="Delete_Click"/>
-        <Button x:Name="Copy" Content="Copy" Margin="260,385,453.6,10.4" Click="Copy_Click"/>
-        <Button x:Name="Replace" Content="Replace" Margin="150,385,563.6,10.4" Click="Replace_Click"/>
-        <Button x:Name="Rename" Content="Rename" Margin="380,385,333.6,10.4" Click="Rename_Click"/>
+        <Button x:Name="Copy" Content="Copy(F5)" Margin="145,385,568.6,10.4" Click="Copy_Click"/>
+        <Button x:Name="Replace" Content="Replace(F6)" Margin="255,385,458.6,10.4" Click="Replace_Click"/>
+        <Button x:Name="Rename" Content="Rename(F7)" Margin="380,385,333.6,10.4" Click="Rename_Click"/>
         <Button x:Name="ReadFromFile" Content="Read" Margin="600,385,113.6,10.4" Click="ReadFromFile_Click"/>
         <Button x:Name="WriteInFile" Content="Write" Margin="490,385,223.6,10.4" Click="WriteInFile_Click"/>
         <Button x:Name="Create" Content="Create" Margin="704,385,9.6,10.4" Click="Create_Click"/>
+        <Button x:Name="Compress" Content="Compress(F8)" Margin="646,25,48.6,370.4" Click="Compress_Click"/>
+        <Button x:Name="Decompress" Content="Decompress(F9)" Margin="145,25,548.6,370.4" Click="Decompress_Click"/>
     </Grid>
 </Window>
