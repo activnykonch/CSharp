@@ -19,6 +19,8 @@ namespace lab1
         List<DirectoryInfo> directories_right;
         List<FileInfo> files_right;
 
+        bool serviceIsRunning;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -28,6 +30,7 @@ namespace lab1
             if (!Drives_right.Items.IsEmpty) Drives_right.SelectedItem = Drives_right.Items[0];
             left = Drives_left.Items.CurrentItem.ToString();
             right = Drives_right.Items.CurrentItem.ToString();
+            serviceIsRunning = false;
             Update();
         }
 
@@ -648,18 +651,8 @@ namespace lab1
                 }
                 if (List_left.SelectedItem is FileInfo)
                 {
-                    InputBox input = new InputBox();
-                    input.Owner = this;
-                    input.NewName.Text = ((FileInfo)List_left.SelectedItem).Name.TrimEnd(((FileInfo)List_left.SelectedItem).Extension.ToCharArray());
-                    input.ShowDialog();
-                    if (input.DialogResult == true)
-                    {
-                        string path = left + '\\' + input.NewName.Text + ((FileInfo)List_left.SelectedItem).Extension;
-                        if (!File.Exists(path))
-                        {
-                            ((FileInfo)List_left.SelectedItem).MoveTo(path);
-                        }
-                    }
+                    ArchiveFile archive = new ArchiveFile(((FileInfo)List_left.SelectedItem).FullName);
+                    archive.Compress();
                 }
             }
             if (List_right.SelectedItem != null)
@@ -814,6 +807,30 @@ namespace lab1
             }
             Keyboard.ClearFocus();
             Update();
+        }
+
+        private void FileWatcher_Click(object sender, RoutedEventArgs e)
+        {
+            serviceIsRunning = true;
+            System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController("FileWatcher");
+            service.Start(new string[] { "C:\\source", "C:\\archive", "C:\\target" });
+            service.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Running, System.TimeSpan.FromMinutes(1));        
+        }
+
+        private void StopFileWatcher_Click(object sender, RoutedEventArgs e)
+        {
+            /*if (serviceIsRunning)
+            {
+                try
+                {
+                    service1.Stop();
+                }
+                catch(System.Exception ex)
+                {
+                    MessageBox.Show($"{ex.Message}", "Error", MessageBoxButton.OK);
+                }
+                serviceIsRunning = false;
+            }*/
         }
     }
 

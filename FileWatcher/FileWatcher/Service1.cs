@@ -3,7 +3,7 @@ using System.ServiceProcess;
 using System.IO;
 using System.Threading;
 
-namespace FileWatcherService
+namespace FileWatcher
 {
     public partial class Service1 : ServiceBase
     {
@@ -19,8 +19,9 @@ namespace FileWatcherService
 
         protected override void OnStart(string[] args)
         {
-            if (args == null) logger = new Logger();
-            else logger = new Logger(args[0], args[1], args[2]);
+            /*if (args == null) logger = new Logger();
+            else logger = new Logger(args[0], args[1], args[2]);*/
+            logger = new Logger();
             Thread loggerThread = new Thread(new ThreadStart(logger.Start));
             loggerThread.Start();
         }
@@ -86,7 +87,7 @@ namespace FileWatcherService
         private string ArchiveFile(string filePath)
         {
             FileInfo file = new FileInfo(filePath);
-            string path = archiveDirectory + "\\" +  file.Name;
+            string path = archiveDirectory + "\\" + file.Name;
             try
             {
                 if (!File.Exists(path))
@@ -117,7 +118,7 @@ namespace FileWatcherService
         private void TargetFile(string filePath)
         {
             FileInfo file = new FileInfo(filePath);
-            string path = targetDirectory +  "\\" + file.Name;
+            string path = targetDirectory + "\\" + file.Name;
             try
             {
                 if (!File.Exists(path))

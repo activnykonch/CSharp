@@ -24,5 +24,7 @@
         <Button x:Name="Create" Content="Create" Margin="704,385,9.6,10.4" Click="Create_Click"/>
         <Button x:Name="Compress" Content="Compress(F8)" Margin="646,25,48.6,370.4" Click="Compress_Click"/>
         <Button x:Name="Decompress" Content="Decompress(F9)" Margin="145,25,548.6,370.4" Click="Decompress_Click"/>
+        <Button x:Name="FileWatcher" Margin="299,2,387.6,398.4" Click="FileWatcher_Click" Content="Run File Watcher"/>
+        <Button x:Name="FileWatcher_Copy" Margin="299,46,387.6,354.4" Click="StopFileWatcher_Click" Content="Stop File Watcher"/>
     </Grid>
 </Window>
