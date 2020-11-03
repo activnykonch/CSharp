@@ -2,6 +2,8 @@
 using System.ServiceProcess;
 using System.IO;
 using System.Threading;
+using Archivation;
+using Encryption;
 
 namespace FileWatcher
 {
@@ -87,24 +89,33 @@ namespace FileWatcher
         private string ArchiveFile(string filePath)
         {
             FileInfo file = new FileInfo(filePath);
-            string path = archiveDirectory + "\\" + file.Name;
             try
             {
-                if (!File.Exists(path))
+                using (FileStream myFile = new FileStream(filePath, FileMode.OpenOrCreate))
                 {
-                    var fl = File.Create(path);
-                    fl.Close();
-                    file.CopyTo(path, true);
+                    string path = archiveDirectory + "\\" + file.Name;
+                    if (File.Exists(path))
+                    {
+                        for (int i = 1; File.Exists(path); i++)
+                        {
+                            path = archiveDirectory + "\\" + Path.GetFileNameWithoutExtension(file.FullName) + $"({i})" + file.Extension;
+                        }
+                    }
+                    using (FileStream fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        myFile.CopyTo(fileStream);
+                    }
+                    encrypt = new EncryptFile(path);
+                    encrypt.Encrypt();
+                    archive = new ArchiveFile(path);
+                    archive.Compress();
+                    return archive.CompressedFileName;
                 }
-                encrypt = new EncryptFile(path);
-                encrypt.Encrypt();
-                archive = new ArchiveFile(path);
-                archive.Compress();
-                return archive.CompressedFileName;
             }
             catch (Exception ex)
             {
-                using (StreamWriter writer = new StreamWriter(sourceDirectory, true))
+                using (FileStream fileStream = new FileStream($"{file.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
                 {
                     writer.WriteLine(String.Format("{0} {1}",
                         DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
@@ -134,13 +145,13 @@ namespace FileWatcher
             }
             catch (Exception ex)
             {
-                using (StreamWriter writer = new StreamWriter(archiveDirectory, true))
+                using (FileStream fileStream = new FileStream($"{file.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
                 {
                     writer.WriteLine(String.Format("{0} {1}",
                         DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
                     writer.Flush();
                 }
-                return;
             }
         }
 

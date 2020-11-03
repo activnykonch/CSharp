@@ -1,49 +1,109 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.IO;
 using System.Security.Cryptography;
+using System.Windows;
 
-namespace FileWatcher
+namespace Encryption
 {
     class EncryptFile
     {
-        System.IO.FileInfo fileInfo;
+        FileInfo fileInfo;
         string key;
+        string iv;
 
         public EncryptFile(string path)
         {
-            fileInfo = new System.IO.FileInfo(path);
-            key = "YungHefner";
+            fileInfo = new FileInfo(path);
+            key = "YoungHeffner2019";
+            iv = "Cadillac";
         }
 
         public void Encrypt()
         {
-            ;
+            try
+            {
+                using (Rijndael rijAlg = Rijndael.Create())
+                {
+                    rijAlg.Mode = CipherMode.CBC;
+                    rijAlg.Padding = PaddingMode.ISO10126;
+                    rijAlg.Key = new UnicodeEncoding().GetBytes(this.key);
+                    rijAlg.IV = new UnicodeEncoding().GetBytes(this.iv);
+                    byte[] encrypted;
+                    using (MemoryStream msEncrypt = new MemoryStream())
+                    {
+                        using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, rijAlg.CreateEncryptor(), CryptoStreamMode.Write))
+                        {
+                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                            {
+                                swEncrypt.Write(File.ReadAllText(fileInfo.FullName));
+                            }
+                            encrypted = msEncrypt.ToArray();
+                        }
+                    }
+                    using (FileStream myStream = new FileStream(fileInfo.FullName, FileMode.Truncate))
+                    {
+                        foreach (byte bt in encrypted)
+                        {
+                            myStream.WriteByte(bt);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                using (FileStream fileStream = new FileStream($"{fileInfo.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
+                {
+                    writer.WriteLine(String.Format("{0} {1}",
+                        DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
+                    writer.Flush();
+                }
+
+            }
         }
 
         public void Decrypt()
         {
-            System.IO.StringReader stream = new System.IO.StringReader(fileInfo.FullName);
-            if (fileInfo.Exists)
+            try
             {
-                string str;
-                string data = "";
-                while ((str = stream.ReadLine()) != null)
+                using (Rijndael rijAlg = Rijndael.Create())
                 {
-                    data += str;
+                    rijAlg.Mode = CipherMode.CBC;
+                    rijAlg.Padding = PaddingMode.ISO10126;
+                    rijAlg.Key = new UnicodeEncoding().GetBytes(this.key);
+                    rijAlg.IV = new UnicodeEncoding().GetBytes(this.iv);
+                    string decrypted;
+                    using (MemoryStream msDecrypt = new MemoryStream(File.ReadAllBytes(fileInfo.FullName)))
+                    {
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, rijAlg.CreateDecryptor(), CryptoStreamMode.Read))
+                        {
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                decrypted = srDecrypt.ReadToEnd();
+                            }
+                        }
+                    }
+                    using (FileStream myStream = new FileStream(fileInfo.FullName, FileMode.Truncate))
+                    {
+                        using (StreamWriter streamWriter = new StreamWriter(myStream))
+                        {
+                            streamWriter.Write(decrypted);
+                        }
+                    }
                 }
-                stream.Close();
-                List<string> content = new List<string>();
-                //content = hash.
-                System.IO.StreamWriter writer = new System.IO.StreamWriter(fileInfo.FullName, false);
-                while (content.Count != 0)
+            }
+            catch (Exception ex)
+            {
+                using (FileStream fileStream = new FileStream($"{fileInfo.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
                 {
-                    writer.WriteLine(content[0]);
-                    content.RemoveAt(0);
+                    writer.WriteLine(String.Format("{0} {1}",
+                        DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
+                    writer.Flush();
                 }
-                writer.Close();
+
             }
         }
     }

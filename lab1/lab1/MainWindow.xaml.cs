@@ -812,7 +812,7 @@ namespace lab1
         private void FileWatcher_Click(object sender, RoutedEventArgs e)
         {
             serviceIsRunning = true;
-            System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController("FileWatcher");
+            System.ServiceProcess.ServiceController service = new System.ServiceProcess.ServiceController("Service1");
             service.Start(new string[] { "C:\\source", "C:\\archive", "C:\\target" });
             service.WaitForStatus(System.ServiceProcess.ServiceControllerStatus.Running, System.TimeSpan.FromMinutes(1));        
         }

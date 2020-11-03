@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 using System.IO.Compression;
 
-namespace FileWatcher
+namespace Archivation
 {
     class ArchiveFile
     {
@@ -23,33 +23,55 @@ namespace FileWatcher
         public void Compress()
         {
             string path = fileInfo.FullName.TrimEnd(fileInfo.Extension.ToCharArray()) + ".zip";
-            using (FileStream sourceStream = new FileStream(fileInfo.FullName, FileMode.OpenOrCreate))
+            try
             {
-                using (FileStream targetStream = File.Create(path))
+                using (FileStream zipToCreate = new FileStream(path, FileMode.OpenOrCreate))
                 {
-                    using (GZipStream compressionStream = new GZipStream(targetStream, CompressionMode.Compress))
+                    using (ZipArchive zip = new ZipArchive(zipToCreate, ZipArchiveMode.Create))
                     {
-                        sourceStream.CopyTo(compressionStream);
+                        zip.CreateEntryFromFile(fileInfo.FullName, fileInfo.Name);
                     }
                 }
+                CompressedFileName = path;
             }
-            CompressedFileName = path;
+            catch (Exception ex)
+            {
+                using (FileStream fileStream = new FileStream($"{fileInfo.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
+                {
+                    writer.WriteLine(String.Format("{0} {1}",
+                        DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
+                    writer.Flush();
+                }
+
+            }
         }
 
         public void Decompress()
         {
-            string path = fileInfo.FullName.TrimEnd(fileInfo.Extension.ToCharArray()) + ".txt"; //????
-            using (FileStream sourceStream = new FileStream(fileInfo.FullName, FileMode.OpenOrCreate))
+            try
             {
-                using (FileStream targetStream = File.Create(path))
+                string path = default;
+                using (var zip = ZipFile.OpenRead(fileInfo.FullName))
                 {
-                    using (GZipStream decompressionStream = new GZipStream(sourceStream, CompressionMode.Decompress))
-                    {
-                        decompressionStream.CopyTo(targetStream);
-                    }
+                    ZipArchiveEntry file = zip.Entries.FirstOrDefault();
+                    path = fileInfo.DirectoryName + "\\" + file.Name;
+                    file.ExtractToFile(path);
                 }
+                DecompressedFileName = path;
             }
-            DecompressedFileName = path;
+            catch (Exception ex)
+            {
+                using (FileStream fileStream = new FileStream($"{fileInfo.Directory}" + "\\" + "log.txt", FileMode.Append))
+                using (StreamWriter writer = new StreamWriter(fileStream))
+                {
+                    writer.WriteLine(String.Format("{0} {1}",
+                        DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss"), ex.Message));
+                    writer.Flush();
+                }
+
+            }
+            Thread.Sleep(100);
         }
     }
 }
