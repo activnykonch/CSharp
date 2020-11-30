@@ -33,9 +33,7 @@ namespace ConfigurationProvider
                     }
                     try
                     {
-                        var deserializeOptions = new JsonSerializerOptions();
-                        //deserializeOptions.Converters.Add(new ObjectToInferredTypesConverter());
-                        return JsonSerializer.Deserialize<T>(element.GetRawText()/*, deserializeOptions*/);
+                        return JsonSerializer.Deserialize<T>(element.GetRawText()); ;
                     }
                     catch (Exception ex)
                     {

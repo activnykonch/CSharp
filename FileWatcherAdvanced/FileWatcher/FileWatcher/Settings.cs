@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using ConfigurationProvider;
+using System.ComponentModel;
 namespace FileWatcher
 {
     public class Settings
@@ -19,6 +21,7 @@ namespace FileWatcher
 
     public class ArchiveSettings
     {
+        [JsonConverter(typeof(ConfigurationProvider.BooleanConverter))]
         public bool NeedToArchive { get; set; }
     }
 

@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -80,6 +81,7 @@
   <ItemGroup>
     <Compile Include="FileWatcher\ArchiveFile.cs" />
     <Compile Include="FileWatcher\EncryptFile.cs" />
+    <Compile Include="SettingsManager\BooleanConverter.cs" />
     <Compile Include="SettingsManager\IConfigurationParser.cs" />
     <Compile Include="FileWatcher\Installer1.cs">
       <SubType>Component</SubType>
@@ -88,7 +90,6 @@
       <DependentUpon>Installer1.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingsManager\JSONParser.cs" />
-    <Compile Include="SettingsManager\ObjectToInferredTypesConverter.cs" />
     <Compile Include="SettingsManager\SettingsManager.cs" />
     <Compile Include="SettingsManager\Provider.cs" />
     <Compile Include="FileWatcher\Service1.cs">
