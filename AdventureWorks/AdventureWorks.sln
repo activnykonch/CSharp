@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.ServiceLayer", "N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.ConfigurationManager", "Northwind.ConfigurationManager\Northwind.ConfigurationManager.csproj", "{BCDEBF2C-4765-4D81-9063-1E6A6804D803}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DataManagerService", "Northwind.DataManagerService\Northwind.DataManagerService.csproj", "{C1C18DC3-9A08-4463-88EE-932CC3169B58}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.FileManagerService", "Northwind.FileManagerService\Northwind.FileManagerService.csproj", "{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DataManagerService", "Northwind.DataManagerService\Northwind.DataManagerService.csproj", "{C1C18DC3-9A08-4463-88EE-932CC3169B58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +43,14 @@ Global
 		{BCDEBF2C-4765-4D81-9063-1E6A6804D803}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCDEBF2C-4765-4D81-9063-1E6A6804D803}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCDEBF2C-4765-4D81-9063-1E6A6804D803}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.Build.0 = Release|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

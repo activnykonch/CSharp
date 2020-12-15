@@ -9,27 +9,11 @@ namespace Northwind.DataAccessLayer.Repositories
 {
     public class EmployeeRepository : IRepository<Employee>
     {
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-        public string ConnectionString { get; private set; }
-=======
->>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
->>>>>>> ed88f2039df0f11b9548e3465822d9aad58615c8
         private readonly SqlConnection sqlConnection;
 
         public EmployeeRepository(string connectionString)
         {
-<<<<<<< HEAD
             sqlConnection = new SqlConnection(connectionString);
-=======
-<<<<<<< HEAD
-            ConnectionString = connectionString;
-            sqlConnection = new SqlConnection(ConnectionString);
-=======
-            sqlConnection = new SqlConnection(connectionString);
->>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
->>>>>>> ed88f2039df0f11b9548e3465822d9aad58615c8
         }
 
         private void OpenConnection()

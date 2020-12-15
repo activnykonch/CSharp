@@ -50,11 +50,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Northwind.DataManagerService\Northwind.DataManagerService.csproj">
-      <Project>{c1c18dc3-9a08-4463-88ee-932cc3169b58}</Project>
-      <Name>Northwind.DataManagerService</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
