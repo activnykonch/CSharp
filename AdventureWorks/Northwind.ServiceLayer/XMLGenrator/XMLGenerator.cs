@@ -15,13 +15,21 @@ namespace Northwind.ServiceLayer.XMLGenrator
 {
     public class XMLGenerator<T> : IGenerator where T : class
     {
+<<<<<<< HEAD
         private readonly List<T> collection;
+=======
+        private readonly IEnumerable<T> collection;
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
         private string XMLPath;
         private string XSDPath;
 
         public XMLGenerator(IEnumerable<T> collection)
         {
+<<<<<<< HEAD
             this.collection = (List<T>)collection;
+=======
+            this.collection = collection;
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
         }
 
         public string GenerateXML()
@@ -31,7 +39,11 @@ namespace Northwind.ServiceLayer.XMLGenrator
             XMLPath = Path.Combine(Environment.CurrentDirectory, Path.Combine(typeof(T).Name + ".xml"));
             using(FileStream file = File.Create(XMLPath))
             {
+<<<<<<< HEAD
                 XmlSerializer serializer = new XmlSerializer(typeof(List<T>));
+=======
+                XmlSerializer serializer = new XmlSerializer(typeof(ICollection<T>));
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
                 serializer.Serialize(file, collection);
             }
             return XMLPath;
@@ -42,13 +54,21 @@ namespace Northwind.ServiceLayer.XMLGenrator
             if (collection == null)
                 return string.Empty;
             XSDPath = Path.Combine(Environment.CurrentDirectory, Path.Combine(typeof(T).Name + ".xsd"));
+<<<<<<< HEAD
             var xmlserializer = new XmlSerializer(typeof(List<T>));
+=======
+            var xmlserializer = new XmlSerializer(typeof(IEnumerable<T>));
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
             string XMLString;
             using (var stringWriter = new StringWriter())
             {
                 using (var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings() { Indent = true }))
                 {
+<<<<<<< HEAD
                         xmlserializer.Serialize(writer, collection);
+=======
+                    xmlserializer.Serialize(writer, collection);
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
                     XMLString = stringWriter.ToString();
                 }
             }

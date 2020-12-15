@@ -15,8 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.ConfigurationMana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.DataManagerService", "Northwind.DataManagerService\Northwind.DataManagerService.csproj", "{C1C18DC3-9A08-4463-88EE-932CC3169B58}"
 EndProject
+<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Northwind.FileManagerService", "Northwind.FileManagerService\Northwind.FileManagerService.csproj", "{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}"
 EndProject
+=======
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +50,13 @@ Global
 		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1C18DC3-9A08-4463-88EE-932CC3169B58}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< HEAD
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32ECDD5D-CAF5-4E25-9A10-558FB9DAD378}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

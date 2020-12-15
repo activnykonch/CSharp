@@ -34,9 +34,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+<<<<<<< HEAD
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
+=======
+    <Reference Include="System.Core" />
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,12 +50,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Installattion\Installer1.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Installattion\Installer1.Designer.cs">
       <DependentUpon>Installer1.cs</DependentUpon>
     </Compile>
+=======
+>>>>>>> 11a14985404befefc2083c4d4468b2eb9064e369
     <Compile Include="Program.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
