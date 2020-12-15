@@ -19,8 +19,12 @@ namespace Northwind.ServiceLayer.DataTransfer
             string path = Path.Combine(destination, Path.GetFileName(file.Name));
             using (FileStream stream = File.Create(path))
             {
-                file.CopyTo(stream);
+                using(FileStream stream = File.Create(destination))
+                {
+                    file.CopyTo(stream);
+                }
             }
+            else throw new Exception("FileError: Destination file already exists");
         }
 
         public void Move(FileStream file, string destination)
@@ -28,8 +32,12 @@ namespace Northwind.ServiceLayer.DataTransfer
             string path = Path.Combine(destination, Path.GetFileName(file.Name));
             using (FileStream stream = File.Create(path))
             {
-                File.Move(file.Name, stream.Name);
+                using (FileStream stream = File.Create(destination))
+                {
+                    File.Move(file.Name, stream.Name);
+                }
             }
+            else throw new Exception("FileError: Destination file already exists");
         }
     }
 }

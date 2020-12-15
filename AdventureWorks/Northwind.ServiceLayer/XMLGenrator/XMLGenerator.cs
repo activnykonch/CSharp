@@ -48,7 +48,7 @@ namespace Northwind.ServiceLayer.XMLGenrator
             {
                 using (var writer = XmlWriter.Create(stringWriter, new XmlWriterSettings() { Indent = true }))
                 {
-                        xmlserializer.Serialize(writer, collection);
+                    xmlserializer.Serialize(writer, collection);
                     XMLString = stringWriter.ToString();
                 }
             }
