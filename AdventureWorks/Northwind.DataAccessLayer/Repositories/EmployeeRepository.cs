@@ -24,7 +24,7 @@ namespace Northwind.DataAccessLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Error(ex.Message, nameof(Northwind.DataAccessLayer.Repositories.EmployeeRepository.OpenConnection), DateTime.Now);
             }
         }
 
@@ -36,7 +36,7 @@ namespace Northwind.DataAccessLayer.Repositories
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Error(ex.Message, nameof(Northwind.DataAccessLayer.Repositories.EmployeeRepository.CloseConnection), DateTime.Now);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Northwind.DataAccessLayer.Repositories
             catch(Exception ex)
             {
                 transaction.Rollback();
-                throw ex;
+                throw new Error(ex.Message, nameof(Northwind.DataAccessLayer.Repositories.EmployeeRepository), DateTime.Now);
             }
             finally
             {
@@ -68,5 +68,30 @@ namespace Northwind.DataAccessLayer.Repositories
             }
             return employees;
          }
+
+        void IRepository<Employee>.LogError(Exception exception)
+        {
+            OpenConnection();
+            SqlTransaction transaction = sqlConnection.BeginTransaction();
+            try
+            {
+                SqlCommand command = sqlConnection.CreateCommand();
+                command.Transaction = transaction;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandText = "LogError";
+                DBWriter<Error> writer = new DBWriter<Error>(command, (Error)exception);
+                writer.WriteDB();
+                transaction.Commit();
+            }
+            catch(Exception ex)
+            {
+                transaction.Rollback();
+                throw new Error(ex.Message, nameof(Northwind.DataAccessLayer.Repositories.EmployeeRepository), DateTime.Now);
+            }
+            finally
+            {
+                CloseConnection();
+            }
+        }
     }
 }

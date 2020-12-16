@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Northwind.ConfigurationManager.Interfaces;
+using Northwind.Models;
 
 namespace Northwind.ConfigurationManager.Parser
 {
@@ -48,14 +48,7 @@ namespace Northwind.ConfigurationManager.Parser
             }
             catch (Exception ex)
             {
-                using (var streamWriter = new StreamWriter(
-                       Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt"),
-                       true, Encoding.Default))
-                {
-                    streamWriter.WriteLine("Xml file deserialization error: " + ex.Message);
-                }
-
-                return null;
+                throw new Error(ex.Message, nameof(Northwind.ConfigurationManager.Parser.XmlParser<T>), DateTime.Now);
             }
         }
 
@@ -76,14 +69,7 @@ namespace Northwind.ConfigurationManager.Parser
             }
             catch (Exception ex)
             {
-                using (var streamWriter = new StreamWriter(
-                       Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "errorMessage.txt"),
-                       true, Encoding.Default))
-                {
-                    streamWriter.WriteLine("Validation error: " + ex.Message);
-                }
-
-                return false;
+                throw ex;
             }
         }
     }

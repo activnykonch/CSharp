@@ -52,6 +52,11 @@
     <Compile Include="Provider\Provider.cs" />
     <Compile Include="Provider\SettingsManager.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Northwind.Models\Northwind.Models.csproj">
+      <Project>{e70d6cbb-fecc-4de3-89dd-62d00c40ca28}</Project>
+      <Name>Northwind.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

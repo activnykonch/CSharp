@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using Northwind.Models;
 using System.IO;
 using System.Text.Json;
 using Northwind.ConfigurationManager.Interfaces;
@@ -35,14 +36,7 @@ namespace Northwind.ConfigurationManager.Parser
                     }
                     catch (Exception ex)
                     {
-                        using (var streamWriter = new StreamWriter(
-                            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt"),
-                            true, Encoding.Default))
-                        {
-                            streamWriter.WriteLine("Json file deserialization error: " + ex.Message);
-                        }
-
-                        return null;
+                        throw new Error(ex.Message, nameof(Northwind.ConfigurationManager.Parser.JsonParser<T>), DateTime.Now);
                     }
 
                 }

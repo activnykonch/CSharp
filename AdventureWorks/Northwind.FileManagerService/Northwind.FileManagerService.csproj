@@ -75,6 +75,10 @@
       <Project>{bcdebf2c-4765-4d81-9063-1e6a6804d803}</Project>
       <Name>Northwind.ConfigurationManager</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Northwind.ServiceLayer\Northwind.ServiceLayer.csproj">
+      <Project>{5f3307e7-d3ac-4fbd-a8b3-d5962a133f25}</Project>
+      <Name>Northwind.ServiceLayer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

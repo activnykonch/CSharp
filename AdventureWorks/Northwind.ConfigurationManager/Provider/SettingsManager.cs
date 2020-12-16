@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Northwind.Models;
 
 namespace Northwind.ConfigurationManager.Provider
 {
@@ -30,14 +31,7 @@ namespace Northwind.ConfigurationManager.Provider
         {
             if (path is null)
             {
-                using (var streamWriter = new StreamWriter(
-                    Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt"),
-                    true, Encoding.Default))
-                {
-                    streamWriter.WriteLine("Error: Configuration file not found.");
-                }
-
-                return null;
+                throw new Error("Cannot find configuration file", nameof(Northwind.ConfigurationManager.Provider.SettingsManager), DateTime.Now);
             }
 
             var provider = new Provider<T>(path);
