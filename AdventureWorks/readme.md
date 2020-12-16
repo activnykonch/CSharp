@@ -11,4 +11,5 @@
 * ConfigurationManager - доработан из 3 лабы для получения любых сеттингов для любого проекта
 * DataManagerService - основная служба, берёт всех сотрудников из бд, запихивает в xml файл и xsd схему и отправляет по пути FTP.Source указанному в Settings.FileWatcherSourceFolder
 * FileManagerService - 3 лаба
+
 Отедльно кинул файлы конфигураций, хотя они должны находиться рядом с exe-шкой
