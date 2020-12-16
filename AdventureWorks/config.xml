@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <StorageSettings>
+    <SourceDirectory>C:\source</SourceDirectory>
+    <ArchiveDirectory>C:\archive</ArchiveDirectory>
+    <TargetDirectory>C:\target</TargetDirectory>
+  </StorageSettings>
+  <ArchiveSettings>
+    <NeedToArchive>true</NeedToArchive>
+  </ArchiveSettings>
+  <CryptingSettings>
+    <EncryptionKey>YoungHeffner2019</EncryptionKey>
+    <EncryptionIV>Cadillac</EncryptionIV>
+  </CryptingSettings>
+</Settings>

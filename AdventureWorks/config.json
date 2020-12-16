@@ -1,0 +1,14 @@
+{
+  "StorageSettings": {
+    "SourceDirectory": "C:\\source",
+    "ArchiveDirectory": "C:\\archive",
+    "TargetDirectory": "C:\\target"
+  },
+  "ArchiveSettings": {
+    "NeedToArchive": "false"
+  },
+  "CryptingSettings": {
+    "EncryptionKey": "YoungHeffner2019",
+    "EncryptionIV": "Cadillac"
+  }
+}
