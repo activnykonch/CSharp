@@ -17,9 +17,6 @@ namespace Northwind.DataManagerService
         public DataManagerService()
         {
             InitializeComponent();
-            this.CanStop = true;
-            this.CanPauseAndContinue = true;
-            this.AutoLog = true;
         }
 
         protected override void OnStart(string[] args)
