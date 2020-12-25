@@ -1,4 +1,5 @@
 ﻿using System.ServiceProcess;
+using System.Threading;
 
 namespace Northwind.DataManagerService
 {
@@ -9,6 +10,7 @@ namespace Northwind.DataManagerService
 #if DEBUG
             DataManagerService s = new DataManagerService();
             s.OnDebug();
+            Thread.Sleep(Timeout.Infinite);
 #else
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]

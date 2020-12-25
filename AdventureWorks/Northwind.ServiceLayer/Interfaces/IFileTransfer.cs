@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace Northwind.ServiceLayer.Interfaces
@@ -10,5 +7,7 @@ namespace Northwind.ServiceLayer.Interfaces
     {
         void Copy(FileStream file, string destination);
         void Move(FileStream file, string destination);
+        Task CopyAsync(FileStream file, string destination);
+        Task MoveAsync(FileStream file, string destination);
     }
 }

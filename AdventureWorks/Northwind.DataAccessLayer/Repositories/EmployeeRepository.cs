@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Northwind.Models;
 using Northwind.DataAccessLayer.Interfaces;
 using Northwind.DataAccessLayer.DBHandling;
@@ -40,7 +41,7 @@ namespace Northwind.DataAccessLayer.Repositories
             }
         }
 
-        IEnumerable<Employee> IRepository<Employee>.GetAll()
+        public IEnumerable<Employee> GetAll()
         {
             OpenConnection();
 
@@ -69,7 +70,12 @@ namespace Northwind.DataAccessLayer.Repositories
             return employees;
          }
 
-        void IRepository<Employee>.LogError(Exception exception)
+        public async Task<IEnumerable<Employee>> GetAllAsync()
+        {
+            return await Task.Run(() => GetAll());
+        }
+
+        public void LogError(Exception exception)
         {
             OpenConnection();
             SqlTransaction transaction = sqlConnection.BeginTransaction();
@@ -92,6 +98,11 @@ namespace Northwind.DataAccessLayer.Repositories
             {
                 CloseConnection();
             }
+        }
+
+        public async Task LogErrorAsync(Exception exception)
+        {
+            await Task.Run(() => LogError(exception));
         }
     }
 }

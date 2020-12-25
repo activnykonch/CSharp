@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Text;
 using Northwind.Models;
 
@@ -36,6 +37,11 @@ namespace Northwind.ConfigurationManager.Provider
 
             var provider = new Provider<T>(path);
             return provider.configurationParser.Parse();
+        }
+
+        public async Task<T> GetSettingsAsync<T>() where T : class
+        {
+            return await Task.Run(() => GetSettings<T>());
         }
     }
 }

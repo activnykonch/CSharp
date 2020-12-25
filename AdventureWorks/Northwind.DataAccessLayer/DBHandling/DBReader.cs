@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using Northwind.Models;
 
 namespace Northwind.DataAccessLayer.DBHandling
 {

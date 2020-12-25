@@ -31,5 +31,24 @@ namespace Northwind.ServiceLayer.DataTransfer
                 File.Move(file.Name, stream.Name);
             }
         }
+
+        public async Task CopyAsync(FileStream file, string destination)
+        {
+            string path = Path.Combine(destination, Path.GetFileName(file.Name));
+            using (FileStream stream = File.Create(path))
+            {
+                await file.CopyToAsync(stream);
+            }
+        }
+
+        public async Task MoveAsync(FileStream file, string destination)
+        {
+            string path = Path.Combine(destination, Path.GetFileName(file.Name));
+            using (FileStream stream = File.Create(path))
+            {
+                await CopyAsync(file, destination);
+                File.Delete(file.Name);
+            }
+        }
     }
 }

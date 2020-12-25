@@ -9,6 +9,8 @@ namespace Northwind.ServiceLayer.Interfaces
     interface IGenerator
     {
         string GenerateXML();
+        Task<string> GenerateXMLAsync();
         string GenerateXSD();
+        Task<string> GenerateXSDAsync();
     }
 }

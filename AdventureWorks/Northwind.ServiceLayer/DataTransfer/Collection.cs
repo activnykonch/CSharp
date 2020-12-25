@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Northwind.DataAccessLayer.Interfaces;
 using Northwind.DataAccessLayer.Repositories;
@@ -17,6 +18,10 @@ namespace Northwind.ServiceLayer.DataTransfer
 
         public IEnumerable<Employee> GetEmployees() => repository.GetAll();
 
-        public void WriteError(Exception ex) => repository.LogError(ex);
+        public async Task<IEnumerable<Employee>> GetEmployeesAsync() => await repository.GetAllAsync();
+
+        public void WriteError(Exception exception) => repository.LogError(exception);
+
+        public async Task WriteErrorAsync(Exception exception) => await repository.LogErrorAsync(exception);
     }
 }

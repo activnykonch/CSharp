@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml.Serialization;
 using System.Xml;
-using System.Linq;
-using Northwind.Models;
-using Northwind.ServiceLayer.DataTransfer;
-using Northwind.ServiceLayer.XMLGenrator;
+using System.Threading.Tasks;
 using Northwind.ServiceLayer.Interfaces;
 using System.IO;
 using System.Xml.Schema;
@@ -35,6 +31,11 @@ namespace Northwind.ServiceLayer.XMLGenrator
                 serializer.Serialize(file, collection);
             }
             return XMLPath;
+        }
+
+        public async Task<string> GenerateXMLAsync()
+        {
+            return await Task.Run(() => GenerateXML());
         }
 
         public string GenerateXSD()
@@ -67,6 +68,11 @@ namespace Northwind.ServiceLayer.XMLGenrator
                 }
             }
             return XSDPath;
+        }
+
+        public async Task<string> GenerateXSDAsync()
+        {
+            return await Task.Run(() => GenerateXSD());
         }
     }
 }
